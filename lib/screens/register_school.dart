@@ -1,61 +1,6 @@
 // import 'package:flutter/material.dart';
 //
 // class RegisterSchoolPage extends StatefulWidget {
-//   const RegisterSchoolPage({super.key});
-//
-//   @override
-//   _RegisterSchoolPageState createState() => _RegisterSchoolPageState();
-// }
-//
-// class _RegisterSchoolPageState extends State<RegisterSchoolPage> {
-//   TextEditingController schoolNameController = TextEditingController();
-//   TextEditingController addressController = TextEditingController();
-//   TextEditingController principalNameController = TextEditingController();
-//   TextEditingController principalEmailController = TextEditingController();
-//   TextEditingController teacherNameController = TextEditingController();
-//   TextEditingController teacherEmailController = TextEditingController();
-//
-//   void _submitRegistration() {
-//     // Implement school registration logic here
-//     // Send email to the principal and teacher with registration details
-//     // This is a dummy function; in reality, you'd send emails and store registration data
-//     print('Registration details sent to Principal: ${principalEmailController.text}, Teacher: ${teacherEmailController.text}');
-//     // You might want to navigate to a confirmation page or show a snackbar
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('School Registration'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             TextField(controller: schoolNameController, decoration: const InputDecoration(labelText: 'School Name')),
-//             TextField(controller: addressController, decoration: const InputDecoration(labelText: 'Address')),
-//             TextField(controller: principalNameController, decoration: const InputDecoration(labelText: 'Principal Name')),
-//             TextField(controller: principalEmailController, decoration: const InputDecoration(labelText: 'Principal Email')),
-//             TextField(controller: teacherNameController, decoration: const InputDecoration(labelText: 'Teacher Name')),
-//             TextField(controller: teacherEmailController, decoration: const InputDecoration(labelText: 'Teacher Email')),
-//             const SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: _submitRegistration,
-//               child: const Text('Submit'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-// import 'package:flutter/material.dart';
-//
-// class RegisterSchoolPage extends StatefulWidget {
 //   const RegisterSchoolPage({Key? key}) : super(key: key);
 //
 //   @override
@@ -364,14 +309,17 @@
 //   }
 // }
 
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class RegisterSchoolPage extends StatefulWidget {
   const RegisterSchoolPage({Key? key}) : super(key: key);
 
   @override
   _RegisterSchoolPageState createState() => _RegisterSchoolPageState();
 }
+
 
 class _RegisterSchoolPageState extends State<RegisterSchoolPage> {
   TextEditingController schoolNameController = TextEditingController();
@@ -381,13 +329,51 @@ class _RegisterSchoolPageState extends State<RegisterSchoolPage> {
   TextEditingController stateController = TextEditingController();
   TextEditingController countryController = TextEditingController();
   TextEditingController principalNameController = TextEditingController();
+  TextEditingController principalEmailController = TextEditingController();
   TextEditingController principalUsernameController = TextEditingController();
   TextEditingController principalPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  void createAccount() async {
+    String school = schoolNameController.text.trim();
+    String address = addressController.text.trim();
+    String pin = pinCodeController.text.trim();
+    String district = districtController.text.trim();
+    String state = stateController.text.trim();
+    String country = countryController.text.trim();
+    String name = principalNameController.text.trim();
+    String username = principalUsernameController.text.trim();
+    String email = principalEmailController.text.trim();
+    String password = principalPasswordController.text.trim();
+    String cPassword = confirmPasswordController.text.trim();
 
+    if(email == "" || password=="" || cPassword =="" || school =="" || address =="" || pin==""|| district=="" || state=="" || country=="" || username=="" || name=="")
+      {
+        log("Please fill all the details!");
+      }
+    else if(password!=cPassword)
+      {
+        log("Password do not match");
+      }
+    else{
+        // create new account
+      try{
+        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+        if (userCredential.user != null)
+          {
+            Navigator.pop(context);
+          }
+        // log("User Created");
+      } on FirebaseAuthException catch(ex){
+      log(ex.code.toString());
+    }
+    }
+
+}
   void _submitRegistration() {
     print('Registration details sent to Principal: ${principalNameController.text}, Username: ${principalUsernameController.text}');
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -461,6 +447,11 @@ class _RegisterSchoolPageState extends State<RegisterSchoolPage> {
                         style: TextStyle(fontSize: 14.0),
                       ),
                       TextField(
+                        controller: principalEmailController,
+                        decoration: InputDecoration(labelText: 'Email'),
+                        style: TextStyle(fontSize: 14.0),
+                      ),
+                      TextField(
                         controller: principalUsernameController,
                         decoration: InputDecoration(labelText: 'Principal Username'),
                         style: TextStyle(fontSize: 14.0),
@@ -481,7 +472,10 @@ class _RegisterSchoolPageState extends State<RegisterSchoolPage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _submitRegistration,
+                //onPressed: _submitRegistration,
+                onPressed: (){
+                  createAccount();
+                },
                 child: const Text('Submit'),
               ),
             ],

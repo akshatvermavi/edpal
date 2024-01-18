@@ -63,6 +63,10 @@
 
 // homepage.dart
 
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'homepage.dart';
 import 'password_reset.dart';
@@ -77,13 +81,36 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void _login() {
+  Future<void> _login() async {
     // Implement login logic here
     // Redirect to homepage after successful login
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
+    //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+
+    if(email =="" || password == "")
+      {
+        log("Please fill the details!");
+      }
+    else{
+      try{
+        UserCredential usercredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+        if(usercredential.user != null)
+          {
+            Navigator.popUntil(context, (route) => route.isFirst);
+            Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HomePage() ));
+
+          }
+      } on FirebaseAuthException catch(ex){
+        log(ex.code.toString());
+      }
+
+
+    }
+
   }
 
   @override
@@ -97,11 +124,12 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(controller: usernameController, decoration: const InputDecoration(labelText: 'Username')),
+            TextField(controller: emailController, decoration: const InputDecoration(labelText: 'email')),
             TextField(controller: passwordController, decoration: const InputDecoration(labelText: 'Password')),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _login,
+              onPressed: (){ _login();
+                },
               child: const Text('Login'),
             ),
             const SizedBox(height: 10),
@@ -112,14 +140,7 @@ class _LoginPageState extends State<LoginPage> {
               },
               child: const Text('Forget Password'),
             ),
-            // const SizedBox(height: 10),
-            // TextButton(
-            //   onPressed: () {
-            //     // Navigate to school registration page
-            //     Navigator.push(context, MaterialPageRoute(builder: (context) => const SchoolRegisterPage()));
-            //   },
-            //   child: const Text("School Registration"),
-            // ),
+
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
