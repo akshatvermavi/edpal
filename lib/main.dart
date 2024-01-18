@@ -1,3 +1,5 @@
+import 'package:edpal/screens/homepage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:edpal/screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(),
+      home: (FirebaseAuth.instance.currentUser != null) ? HomePage() :  LoginPage(),
     );
   }
 }
