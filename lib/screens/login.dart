@@ -481,6 +481,268 @@
 
 
 
+// import 'dart:developer';
+//
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'homepage.dart';
+// import 'password_reset.dart';
+// import 'register_school.dart';
+//
+// class LoginPage extends StatefulWidget {
+//   const LoginPage({super.key});
+//
+//   @override
+//   _LoginPageState createState() => _LoginPageState();
+// }
+//
+// class _LoginPageState extends State<LoginPage> {
+//   TextEditingController emailController = TextEditingController();
+//   TextEditingController passwordController = TextEditingController();
+//   bool isPasswordVisible = false;
+//
+//   Future<void> _login() async {
+//     String email = emailController.text.trim();
+//     String password = passwordController.text.trim();
+//
+//     if (email == "" || password == "") {
+//       log("Please fill the details!");
+//     } else {
+//       try {
+//         UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+//         if (userCredential.user != null) {
+//           Navigator.popUntil(context, (route) => route.isFirst);
+//           Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HomePage()));
+//         }
+//       } on FirebaseAuthException catch (ex) {
+//         log(ex.code.toString());
+//       }
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     double screenWidth = MediaQuery.of(context).size.width;
+//     double imageWidth = screenWidth * 0.6; // Adjust the scaling factor as needed
+//
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Login'),
+//       ),
+//       body: SingleChildScrollView(
+//         child: Padding(
+//           padding: const EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 16.0),
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Image.asset(
+//                 'assets/loginpagepics/android/drawable-hdpi/loginpageimage.png',
+//                 width: imageWidth,
+//                 height: imageWidth,
+//                 fit: BoxFit.contain,
+//               ),
+//               const SizedBox(height: 20),
+//               TextField(controller: emailController, decoration: const InputDecoration(labelText: 'Email')),
+//               const SizedBox(height: 10),
+//               Stack(
+//                 alignment: Alignment.centerRight,
+//                 children: [
+//                   TextField(
+//                     controller: passwordController,
+//                     decoration: InputDecoration(
+//                       labelText: 'Password',
+//                     ),
+//                     obscureText: !isPasswordVisible,
+//                   ),
+//                   IconButton(
+//                     icon: Icon(
+//                       isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+//                       color: Colors.grey,
+//                     ),
+//                     onPressed: () {
+//                       setState(() {
+//                         isPasswordVisible = !isPasswordVisible;
+//                       });
+//                     },
+//                   ),
+//                 ],
+//               ),
+//               const SizedBox(height: 20),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   _login();
+//                 },
+//                 child: const Text('Login'),
+//               ),
+//               const SizedBox(height: 10),
+//               TextButton(
+//                 onPressed: () {
+//                   Navigator.push(context, MaterialPageRoute(builder: (context) => const PasswordResetPage()));
+//                 },
+//                 child: const Text('Forget Password'),
+//               ),
+//               const SizedBox(height: 10),
+//               TextButton(
+//                 onPressed: () {
+//                   Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterSchoolPage()));
+//                 },
+//                 child: const Text("Click here if your school is not on EDPAL"),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+
+// import 'dart:developer';
+//
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'homepage.dart';
+// import 'password_reset.dart';
+// import 'register_school.dart';
+//
+// class LoginPage extends StatefulWidget {
+//   const LoginPage({super.key});
+//
+//   @override
+//   _LoginPageState createState() => _LoginPageState();
+// }
+//
+// class _LoginPageState extends State<LoginPage> {
+//   TextEditingController emailController = TextEditingController();
+//   TextEditingController passwordController = TextEditingController();
+//   bool isPasswordVisible = false;
+//
+//   Future<void> _login() async {
+//     String email = emailController.text.trim();
+//     String password = passwordController.text.trim();
+//
+//     if (email == "" || password == "") {
+//       log("Please fill in the details!");
+//       return;
+//     }
+//
+//     try {
+//       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+//       if (userCredential.user != null) {
+//         Navigator.popUntil(context, (route) => route.isFirst);
+//         Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HomePage()));
+//       }
+//     } on FirebaseAuthException catch (ex) {
+//       log(ex.code.toString());
+//
+//       if (ex.code == 'wrong-password') {
+//         _showErrorDialog('Wrong Password', 'The password you entered is incorrect.');
+//       } else {
+//         _showErrorDialog('Authentication Error', 'please check password or email.');
+//       }
+//     }
+//   }
+//
+//   void _showErrorDialog(String title, String message) {
+//     showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           title: Text(title),
+//           content: Text(message),
+//           actions: [
+//             TextButton(
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               },
+//               child: const Text('OK'),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     double screenWidth = MediaQuery.of(context).size.width;
+//     double imageWidth = screenWidth * 0.6; // Adjust the scaling factor as needed
+//
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Login'),
+//       ),
+//       body: SingleChildScrollView(
+//         child: Padding(
+//           padding: const EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 16.0),
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Image.asset(
+//                 'assets/loginpagepics/android/drawable-hdpi/loginpageimage.png',
+//                 width: imageWidth,
+//                 height: imageWidth,
+//                 fit: BoxFit.contain,
+//               ),
+//               const SizedBox(height: 20),
+//               TextField(controller: emailController, decoration: const InputDecoration(labelText: 'Email')),
+//               const SizedBox(height: 10),
+//               Stack(
+//                 alignment: Alignment.centerRight,
+//                 children: [
+//                   TextField(
+//                     controller: passwordController,
+//                     decoration: InputDecoration(
+//                       labelText: 'Password',
+//                     ),
+//                     obscureText: !isPasswordVisible,
+//                   ),
+//                   IconButton(
+//                     icon: Icon(
+//                       isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+//                       color: Colors.grey,
+//                     ),
+//                     onPressed: () {
+//                       setState(() {
+//                         isPasswordVisible = !isPasswordVisible;
+//                       });
+//                     },
+//                   ),
+//                 ],
+//               ),
+//               const SizedBox(height: 20),
+//               ElevatedButton(
+//                 onPressed: () async {
+//                   await _login();
+//                 },
+//                 child: const Text('Login'),
+//               ),
+//               const SizedBox(height: 10),
+//               TextButton(
+//                 onPressed: () {
+//                   Navigator.push(context, MaterialPageRoute(builder: (context) => const PasswordResetPage()));
+//                 },
+//                 child: const Text('Forget Password'),
+//               ),
+//               const SizedBox(height: 10),
+//               TextButton(
+//                 onPressed: () {
+//                   Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterSchoolPage()));
+//                 },
+//                 child: const Text("Click here if your school is not on EDPAL"),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -507,18 +769,45 @@ class _LoginPageState extends State<LoginPage> {
     String password = passwordController.text.trim();
 
     if (email == "" || password == "") {
-      log("Please fill the details!");
-    } else {
-      try {
-        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-        if (userCredential.user != null) {
-          Navigator.popUntil(context, (route) => route.isFirst);
-          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HomePage()));
-        }
-      } on FirebaseAuthException catch (ex) {
-        log(ex.code.toString());
+      log("Please fill in the details!");
+      return;
+    }
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      if (userCredential.user != null) {
+        Navigator.popUntil(context, (route) => route.isFirst);
+        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HomePage()));
+      }
+    } on FirebaseAuthException catch (ex) {
+      log(ex.code.toString());
+
+      if (ex.code == 'wrong-password') {
+        _showErrorDialog('Wrong Password', 'The password you entered is incorrect.');
+      } else {
+        _showErrorDialog('Authentication Error', 'An error occurred during authentication.');
       }
     }
+  }
+
+  void _showErrorDialog(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -570,8 +859,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  _login();
+                onPressed: () async {
+                  await _login();
                 },
                 child: const Text('Login'),
               ),
