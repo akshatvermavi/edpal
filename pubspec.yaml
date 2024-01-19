@@ -63,6 +63,7 @@ flutter:
   assets:
     - assets/logo/android/drawable-hdpi/edpal.png
     - assets/image/android/drawable-hdpi/aboutpage.jpg
+    - assets/loginpagepics/android/drawable-hdpi/loginpageimage.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
