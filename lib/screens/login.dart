@@ -785,7 +785,7 @@ class _LoginPageState extends State<LoginPage> {
       if (ex.code == 'wrong-password') {
         _showErrorDialog('Wrong Password', 'The password you entered is incorrect.');
       } else {
-        _showErrorDialog('Authentication Error', 'An error occurred during authentication.');
+        _showErrorDialog('Authentication Error', 'Please check your email or password.');
       }
     }
   }
