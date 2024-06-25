@@ -1,0 +1,42 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "edpal-60c29",
+          "appId": "1:811505798364:android:83fd42929535d311bd7819",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "edpal-60c29",
+          "configurations": {
+            "android": "1:811505798364:android:83fd42929535d311bd7819",
+            "ios": "1:811505798364:ios:c18212ffca05c366bd7819",
+            "macos": "1:811505798364:ios:c18212ffca05c366bd7819",
+            "web": "1:811505798364:web:9eb88d0c72e7774fbd7819",
+            "windows": "1:811505798364:web:dc50b64321db26a6bd7819"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "source": "./C:/Users/aksha/StudioProjects/edpal",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "frameworksBackend": {
+      "region": "asia-east1"
+    }
+  }
+}

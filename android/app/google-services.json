@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "811505798364",
+    "firebase_url": "https://edpal-60c29-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "edpal-60c29",
+    "storage_bucket": "edpal-60c29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811505798364:android:fb6064c039b9f2fbbd7819",
+        "android_client_info": {
+          "package_name": "com.edpal.edpal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQTyiO_yMy-uw5VtNjI5x0x4jmfGuOAAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811505798364:android:83fd42929535d311bd7819",
+        "android_client_info": {
+          "package_name": "com.ic_launcher.png.ic_launcher.png"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQTyiO_yMy-uw5VtNjI5x0x4jmfGuOAAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
