@@ -2,15 +2,15 @@ import {generate} from "@genkit-ai/ai";
 import {configureGenkit} from "@genkit-ai/core";
 import {firebaseAuth} from "@genkit-ai/firebase/auth";
 import {onFlow} from "@genkit-ai/firebase/functions";
-import {geminiPro} from "@genkit-ai/googleai";
+import {geminiPro} from "@genkit-ai/vertexai";
 import * as z from "zod";
 import {firebase} from "@genkit-ai/firebase";
-import {googleAI} from "@genkit-ai/googleai";
+import {vertexAI} from "@genkit-ai/vertexai";
 
 configureGenkit({
   plugins: [
     firebase(),
-    googleAI(),
+    vertexAI({ location: 'us-central1' }),
   ],
   logLevel: "debug",
   enableTracingAndMetrics: true,
